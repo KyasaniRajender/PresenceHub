@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="EduTrack — College Institute Attendance Management System"/>
+  <meta name="theme-color" content="#0A0F1E"/>
+  <title>EduTrack | Attendance Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ===== LOADER ===== -->
+  <div id="loader" class="loader" role="status" aria-label="Loading">
+    <div class="loader__inner">
+      <div class="loader__ring"></div>
+      <span class="loader__text">EduTrack</span>
+    </div>
+  </div>
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside id="sidebar" class="sidebar" role="navigation" aria-label="Main navigation">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14 2L26 8V20L14 26L2 20V8L14 2Z" fill="url(#hexGrad)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+          <path d="M14 7L21 11V17L14 21L7 17V11L14 7Z" fill="rgba(255,255,255,0.08)"/>
+          <circle cx="14" cy="14" r="3" fill="#fff"/>
+          <defs>
+            <linearGradient id="hexGrad" x1="2" y1="2" x2="26" y2="26">
+              <stop offset="0%" stop-color="#4F7CFF"/>
+              <stop offset="100%" stop-color="#2B4FD4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="sidebar__logo-text">
+        <span class="sidebar__logo-name">EduTrack</span>
+        <span class="sidebar__logo-sub">Institute Portal</span>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav">
+      <ul class="sidebar__nav-list" role="list">
+        <li class="sidebar__nav-item sidebar__nav-item--active" data-page="dashboard">
+          <button class="sidebar__nav-btn" data-target="dashboard" aria-current="page">
+            <svg class="sidebar__nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            <span>Dashboard</span>
+            <div class="sidebar__nav-badge" id="navBadgeDashboard"></div>
+          </button>
+        </li>
+        <li class="sidebar__nav-item" data-page="take-attendance">
+          <button class="sidebar__nav-btn" data-target="take-attendance">
+            <svg class="sidebar__nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg>
+            <span>Take Attendance</span>
+            <div class="sidebar__nav-badge" id="navBadgeAttendance"></div>
+          </button>
+        </li>
+        <li class="sidebar__nav-item" data-page="students">
+          <button class="sidebar__nav-btn" data-target="students">
+            <svg class="sidebar__nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Students</span>
+          </button>
+        </li>
+        <li class="sidebar__nav-item" data-page="reports">
+          <button class="sidebar__nav-btn" data-target="reports">
+            <svg class="sidebar__nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+            <span>Reports</span>
+          </button>
+        </li>
+        <li class="sidebar__nav-item" data-page="settings">
+          <button class="sidebar__nav-btn" data-target="settings">
+            <svg class="sidebar__nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+            <span>Settings</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar__footer">
+      <div class="sidebar__user">
+        <div class="sidebar__user-avatar" aria-hidden="true">A</div>
+        <div class="sidebar__user-info">
+          <span class="sidebar__user-name">Admin</span>
+          <span class="sidebar__user-role">Institute Admin</span>
+        </div>
+      </div>
+      <button class="sidebar__collapse-btn" id="sidebarCollapseBtn" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== MOBILE HEADER ===== -->
+  <header class="mobile-header">
+    <button class="mobile-header__menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-header__logo">EduTrack</div>
+    <button class="mobile-header__notif" aria-label="Notifications">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="mobile-header__notif-dot"></span>
+    </button>
+  </header>
+
+  <!-- ===== MOBILE OVERLAY ===== -->
+  <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main" id="mainContent">
+
+    <!-- ============================
+         PAGE: DASHBOARD
+    ============================= -->
+    <section class="page page--active" id="page-dashboard" aria-label="Dashboard">
+
+      <div class="page__header">
+        <div class="page__header-left">
+          <h1 class="page__title">Dashboard</h1>
+          <p class="page__subtitle" id="dashDate">Loading date...</p>
+        </div>
+        <div class="page__header-right">
+          <button class="btn btn--outline btn--sm" id="exportBtn" aria-label="Export attendance data">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+          <button class="btn btn--primary btn--sm" id="quickAttendBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Session
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid" role="region" aria-label="Statistics overview">
+        <article class="stat-card stat-card--blue" aria-label="Total students">
+          <div class="stat-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__value" id="statTotalStudents">0</span>
+            <span class="stat-card__label">Total Students</span>
+          </div>
+          <div class="stat-card__trend stat-card__trend--up" id="statStudentTrend">+0 this week</div>
+        </article>
+
+        <article class="stat-card stat-card--green" aria-label="Present today">
+          <div class="stat-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__value" id="statPresent">0</span>
+            <span class="stat-card__label">Present Today</span>
+          </div>
+          <div class="stat-card__trend" id="statPresentPct">0%</div>
+        </article>
+
+        <article class="stat-card stat-card--amber" aria-label="Absent today">
+          <div class="stat-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__value" id="statAbsent">0</span>
+            <span class="stat-card__label">Absent Today</span>
+          </div>
+          <div class="stat-card__trend" id="statAbsentPct">0%</div>
+        </article>
+
+        <article class="stat-card stat-card--purple" aria-label="Attendance rate">
+          <div class="stat-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__value" id="statRate">0%</span>
+            <span class="stat-card__label">Avg. Attendance Rate</span>
+          </div>
+          <div class="stat-card__trend stat-card__trend--up" id="statRateTrend">All time</div>
+        </article>
+      </div>
+
+      <!-- Chart + Recent Sessions -->
+      <div class="dashboard-grid">
+        <div class="dashboard-grid__chart card">
+          <div class="card__header">
+            <h2 class="card__title">Weekly Attendance Overview</h2>
+            <div class="chart-legend">
+              <span class="chart-legend__item chart-legend__item--present">Present</span>
+              <span class="chart-legend__item chart-legend__item--absent">Absent</span>
+            </div>
+          </div>
+          <div class="card__body">
+            <canvas id="weeklyChart" width="600" height="220" aria-label="Weekly attendance chart" role="img"></canvas>
+          </div>
+        </div>
+
+        <div class="dashboard-grid__recent card">
+          <div class="card__header">
+            <h2 class="card__title">Recent Sessions</h2>
+            <button class="btn btn--ghost btn--xs" id="viewAllSessionsBtn">View all</button>
+          </div>
+          <div class="card__body">
+            <ul class="session-list" id="recentSessionList" role="list" aria-label="Recent attendance sessions">
+              <li class="session-list__empty">No sessions yet. Start taking attendance!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Low attendance alert -->
+      <div class="alert-section" id="lowAttendanceAlert" aria-live="polite" hidden>
+        <div class="alert alert--warning">
+          <svg class="alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div class="alert__content">
+            <strong class="alert__title">Low Attendance Alert</strong>
+            <p class="alert__text" id="lowAttendanceText">Some students have attendance below 75%.</p>
+          </div>
+          <button class="alert__close" aria-label="Dismiss alert" id="dismissAlertBtn">&times;</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================
+         PAGE: TAKE ATTENDANCE
+    ============================= -->
+    <section class="page" id="page-take-attendance" aria-label="Take Attendance" hidden>
+
+      <div class="page__header">
+        <div class="page__header-left">
+          <h1 class="page__title">Take Attendance</h1>
+          <p class="page__subtitle">Mark attendance for a session</p>
+        </div>
+        <div class="page__header-right">
+          <button class="btn btn--outline btn--sm" id="markAllPresentBtn">Mark All Present</button>
+          <button class="btn btn--outline btn--sm" id="markAllAbsentBtn">Mark All Absent</button>
+        </div>
+      </div>
+
+      <!-- Session Setup -->
+      <div class="card session-setup" id="sessionSetup">
+        <div class="card__header">
+          <h2 class="card__title">Session Details</h2>
+          <div class="session-setup__status" id="sessionStatus">
+            <span class="status-dot status-dot--idle"></span> Not Started
+          </div>
+        </div>
+        <div class="card__body">
+          <form class="session-form" id="sessionForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="sessionClass">Class / Section <span aria-hidden="true">*</span></label>
+                <select class="form-control" id="sessionClass" required aria-required="true">
+                  <option value="">Select Class</option>
+                  <option value="CS-A">Computer Science - A</option>
+                  <option value="CS-B">Computer Science - B</option>
+                  <option value="EC-A">Electronics - A</option>
+                  <option value="EC-B">Electronics - B</option>
+                  <option value="ME-A">Mechanical - A</option>
+                  <option value="ME-B">Mechanical - B</option>
+                  <option value="CE-A">Civil Engineering - A</option>
+                  <option value="IT-A">Information Technology - A</option>
+                </select>
+                <span class="form-error" id="sessionClassError" role="alert"></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="sessionSubject">Subject <span aria-hidden="true">*</span></label>
+                <select class="form-control" id="sessionSubject" required aria-required="true">
+                  <option value="">Select Subject</option>
+                  <option value="DSA">Data Structures & Algorithms</option>
+                  <option value="DBMS">Database Management Systems</option>
+                  <option value="OS">Operating Systems</option>
+                  <option value="CN">Computer Networks</option>
+                  <option value="MATHS">Engineering Mathematics</option>
+                  <option value="PHY">Engineering Physics</option>
+                  <option value="CHEM">Engineering Chemistry</option>
+                  <option value="PL">Programming Languages</option>
+                  <option value="SE">Software Engineering</option>
+                  <option value="AI">Artificial Intelligence</option>
+                </select>
+                <span class="form-error" id="sessionSubjectError" role="alert"></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="sessionDate">Date <span aria-hidden="true">*</span></label>
+                <input type="date" class="form-control" id="sessionDate" required aria-required="true"/>
+                <span class="form-error" id="sessionDateError" role="alert"></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="sessionPeriod">Period</label>
+                <select class="form-control" id="sessionPeriod">
+                  <option value="1">Period 1 (08:00–09:00)</option>
+                  <option value="2">Period 2 (09:00–10:00)</option>
+                  <option value="3">Period 3 (10:15–11:15)</option>
+                  <option value="4">Period 4 (11:15–12:15)</option>
+                  <option value="5">Period 5 (13:00–14:00)</option>
+                  <option value="6">Period 6 (14:00–15:00)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn--primary" id="startSessionBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Start Session
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="attendance-toolbar" id="attendanceToolbar" hidden>
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="search" class="search-input" id="studentSearch" placeholder="Search student name or roll no..." aria-label="Search students"/>
+        </div>
+        <div class="attendance-filter" role="group" aria-label="Filter attendance status">
+          <button class="filter-btn filter-btn--active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="present">Present</button>
+          <button class="filter-btn" data-filter="absent">Absent</button>
+          <button class="filter-btn" data-filter="unmarked">Unmarked</button>
+        </div>
+        <div class="attendance-progress" aria-label="Session progress">
+          <span id="attendanceProgressText">0 / 0 marked</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar__fill" id="attendanceProgressBar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Attendance Grid -->
+      <div class="attendance-grid" id="attendanceGrid" role="list" aria-label="Student attendance list"></div>
+
+      <!-- Submit Attendance -->
+      <div class="attendance-submit" id="attendanceSubmit" hidden>
+        <div class="attendance-submit__summary">
+          <div class="submit-stat submit-stat--present">
+            <span id="submitPresent">0</span> Present
+          </div>
+          <div class="submit-stat submit-stat--absent">
+            <span id="submitAbsent">0</span> Absent
+          </div>
+          <div class="submit-stat submit-stat--unmarked">
+            <span id="submitUnmarked">0</span> Unmarked
+          </div>
+        </div>
+        <div class="attendance-submit__actions">
+          <button class="btn btn--outline" id="cancelSessionBtn">Cancel Session</button>
+          <button class="btn btn--primary btn--lg" id="submitAttendanceBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg>
+            Submit Attendance
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================
+         PAGE: STUDENTS
+    ============================= -->
+    <section class="page" id="page-students" aria-label="Student Management" hidden>
+
+      <div class="page__header">
+        <div class="page__header-left">
+          <h1 class="page__title">Students</h1>
+          <p class="page__subtitle">Manage enrolled students</p>
+        </div>
+        <div class="page__header-right">
+          <button class="btn btn--outline btn--sm" id="importStudentsBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Import CSV
+          </button>
+          <button class="btn btn--primary btn--sm" id="addStudentBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Student
+          </button>
+        </div>
+      </div>
+
+      <!-- Student Search & Filters -->
+      <div class="table-toolbar">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="search" class="search-input" id="studentListSearch" placeholder="Search by name, roll no, or class..." aria-label="Search students"/>
+        </div>
+        <div class="table-toolbar__filters">
+          <select class="form-control form-control--sm" id="filterClass" aria-label="Filter by class">
+            <option value="">All Classes</option>
+            <option value="CS-A">CS-A</option>
+            <option value="CS-B">CS-B</option>
+            <option value="EC-A">EC-A</option>
+            <option value="EC-B">EC-B</option>
+            <option value="ME-A">ME-A</option>
+            <option value="ME-B">ME-B</option>
+            <option value="CE-A">CE-A</option>
+            <option value="IT-A">IT-A</option>
+          </select>
+          <select class="form-control form-control--sm" id="filterSemester" aria-label="Filter by semester">
+            <option value="">All Semesters</option>
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+            <option value="5">Semester 5</option>
+            <option value="6">Semester 6</option>
+          </select>
+        </div>
+        <span class="table-toolbar__count" id="studentCount">0 students</span>
+      </div>
+
+      <!-- Students Table -->
+      <div class="card">
+        <div class="table-container" role="region" aria-label="Students table" tabindex="0">
+          <table class="data-table" id="studentsTable" aria-label="Student list">
+            <thead>
+              <tr>
+                <th scope="col" class="sortable" data-col="rollNo" aria-sort="none">Roll No <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                <th scope="col" class="sortable" data-col="name" aria-sort="none">Full Name <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                <th scope="col">Class</th>
+                <th scope="col">Semester</th>
+                <th scope="col">Contact</th>
+                <th scope="col" class="sortable" data-col="attendance" aria-sort="none">Attendance <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+              <tr>
+                <td colspan="8" class="table-empty">
+                  <div class="table-empty__inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                    <span>No students found. Add students to get started.</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-pagination" id="studentPagination" aria-label="Table pagination">
+          <button class="btn btn--ghost btn--xs" id="prevPageBtn" disabled aria-label="Previous page">← Prev</button>
+          <span class="pagination-info" id="paginationInfo">Page 1 of 1</span>
+          <button class="btn btn--ghost btn--xs" id="nextPageBtn" disabled aria-label="Next page">Next →</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================
+         PAGE: REPORTS
+    ============================= -->
+    <section class="page" id="page-reports" aria-label="Reports" hidden>
+
+      <div class="page__header">
+        <div class="page__header-left">
+          <h1 class="page__title">Reports</h1>
+          <p class="page__subtitle">View and export attendance reports</p>
+        </div>
+        <div class="page__header-right">
+          <button class="btn btn--primary btn--sm" id="generateReportBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Generate Report
+          </button>
+        </div>
+      </div>
+
+      <div class="reports-filters card">
+        <div class="card__body">
+          <form class="form-row" id="reportFilterForm">
+            <div class="form-group">
+              <label class="form-label" for="reportClass">Class</label>
+              <select class="form-control" id="reportClass">
+                <option value="">All Classes</option>
+                <option value="CS-A">Computer Science - A</option>
+                <option value="CS-B">Computer Science - B</option>
+                <option value="EC-A">Electronics - A</option>
+                <option value="ME-A">Mechanical - A</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reportSubject">Subject</label>
+              <select class="form-control" id="reportSubject">
+                <option value="">All Subjects</option>
+                <option value="DSA">DSA</option>
+                <option value="DBMS">DBMS</option>
+                <option value="OS">OS</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reportFrom">From Date</label>
+              <input type="date" class="form-control" id="reportFrom"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reportTo">To Date</label>
+              <input type="date" class="form-control" id="reportTo"/>
+            </div>
+            <div class="form-group form-group--end">
+              <button type="submit" class="btn btn--outline">Apply Filters</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Report Table -->
+      <div class="card">
+        <div class="card__header">
+          <h2 class="card__title">Attendance Report</h2>
+          <div class="card__header-actions">
+            <button class="btn btn--ghost btn--xs" id="exportCSVBtn">Export CSV</button>
+            <button class="btn btn--ghost btn--xs" id="exportPDFBtn">Export PDF</button>
+          </div>
+        </div>
+        <div class="table-container" role="region" aria-label="Report data">
+          <table class="data-table" id="reportTable" aria-label="Attendance report">
+            <thead>
+              <tr>
+                <th scope="col">Roll No</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Class</th>
+                <th scope="col">Total Classes</th>
+                <th scope="col">Present</th>
+                <th scope="col">Absent</th>
+                <th scope="col">Attendance %</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <tr>
+                <td colspan="8" class="table-empty">
+                  <div class="table-empty__inner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <span>Generate a report using the filters above.</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================
+         PAGE: SETTINGS
+    ============================= -->
+    <section class="page" id="page-settings" aria-label="Settings" hidden>
+
+      <div class="page__header">
+        <div class="page__header-left">
+          <h1 class="page__title">Settings</h1>
+          <p class="page__subtitle">Configure your institute preferences</p>
+        </div>
+      </div>
+
+      <div class="settings-grid">
+        <!-- Institute Info -->
+        <div class="card settings-card">
+          <div class="card__header">
+            <h2 class="card__title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+              Institute Information
+            </h2>
+          </div>
+          <div class="card__body">
+            <div class="form-group">
+              <label class="form-label" for="instName">Institute Name</label>
+              <input type="text" class="form-control" id="instName" value="Government Institute of Technology"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="instCode">Institute Code</label>
+              <input type="text" class="form-control" id="instCode" value="GIT-2024"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="instAddress">Address</label>
+              <textarea class="form-control" id="instAddress" rows="2">123 Education Blvd, Tech City - 400001</textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="instEmail">Admin Email</label>
+              <input type="email" class="form-control" id="instEmail" value="admin@git.edu.in"/>
+            </div>
+            <button class="btn btn--primary" id="saveInstInfoBtn">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- Attendance Rules -->
+        <div class="card settings-card">
+          <div class="card__header">
+            <h2 class="card__title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+              Attendance Rules
+            </h2>
+          </div>
+          <div class="card__body">
+            <div class="form-group">
+              <label class="form-label" for="minAttendance">Minimum Attendance Requirement (%)</label>
+              <input type="number" class="form-control" id="minAttendance" value="75" min="50" max="100"/>
+              <span class="form-hint">Students below this threshold will be flagged.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="alertThreshold">Alert Threshold (%)</label>
+              <input type="number" class="form-control" id="alertThreshold" value="80" min="50" max="100"/>
+              <span class="form-hint">Show warning when attendance drops below this.</span>
+            </div>
+            <div class="toggle-group">
+              <label class="toggle-label">
+                <span>Enable late mark</span>
+                <div class="toggle">
+                  <input type="checkbox" id="enableLate" checked aria-label="Enable late mark"/>
+                  <div class="toggle__track"><div class="toggle__thumb"></div></div>
+                </div>
+              </label>
+              <label class="toggle-label">
+                <span>Email alerts for low attendance</span>
+                <div class="toggle">
+                  <input type="checkbox" id="enableEmailAlerts" aria-label="Email alerts for low attendance"/>
+                  <div class="toggle__track"><div class="toggle__thumb"></div></div>
+                </div>
+              </label>
+              <label class="toggle-label">
+                <span>Auto-submit after period ends</span>
+                <div class="toggle">
+                  <input type="checkbox" id="enableAutoSubmit" aria-label="Auto-submit after period ends"/>
+                  <div class="toggle__track"><div class="toggle__thumb"></div></div>
+                </div>
+              </label>
+            </div>
+            <button class="btn btn--primary" id="saveRulesBtn">Save Rules</button>
+          </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="card settings-card">
+          <div class="card__header">
+            <h2 class="card__title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              Data Management
+            </h2>
+          </div>
+          <div class="card__body">
+            <div class="data-action">
+              <div class="data-action__info">
+                <strong>Export All Data</strong>
+                <p>Download complete attendance records as CSV</p>
+              </div>
+              <button class="btn btn--outline btn--sm" id="exportAllDataBtn">Export</button>
+            </div>
+            <div class="data-action">
+              <div class="data-action__info">
+                <strong>Import Student List</strong>
+                <p>Upload CSV file with student details</p>
+              </div>
+              <button class="btn btn--outline btn--sm" id="importDataBtn">Import</button>
+            </div>
+            <div class="data-action data-action--danger">
+              <div class="data-action__info">
+                <strong>Clear All Data</strong>
+                <p>Permanently delete all attendance records</p>
+              </div>
+              <button class="btn btn--danger btn--sm" id="clearDataBtn">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theme & Appearance -->
+        <div class="card settings-card">
+          <div class="card__header">
+            <h2 class="card__title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 2v20M2 12h20"/></svg>
+              Appearance
+            </h2>
+          </div>
+          <div class="card__body">
+            <div class="form-group">
+              <label class="form-label">Theme</label>
+              <div class="theme-selector" role="group" aria-label="Select theme">
+                <button class="theme-btn theme-btn--dark theme-btn--active" data-theme="dark" aria-pressed="true">Dark</button>
+                <button class="theme-btn theme-btn--light" data-theme="light" aria-pressed="false">Light</button>
+                <button class="theme-btn theme-btn--auto" data-theme="auto" aria-pressed="false">Auto</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Accent Color</label>
+              <div class="color-palette" role="group" aria-label="Select accent color">
+                <button class="color-swatch color-swatch--active" style="--c:#4F7CFF" data-color="#4F7CFF" aria-label="Blue" aria-pressed="true"></button>
+                <button class="color-swatch" style="--c:#10B981" data-color="#10B981" aria-label="Green" aria-pressed="false"></button>
+                <button class="color-swatch" style="--c:#F59E0B" data-color="#F59E0B" aria-label="Amber" aria-pressed="false"></button>
+                <button class="color-swatch" style="--c:#EF4444" data-color="#EF4444" aria-label="Red" aria-pressed="false"></button>
+                <button class="color-swatch" style="--c:#8B5CF6" data-color="#8B5CF6" aria-label="Purple" aria-pressed="false"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===== MODALS ===== -->
+
+  <!-- Add/Edit Student Modal -->
+  <div class="modal" id="studentModal" role="dialog" aria-modal="true" aria-labelledby="studentModalTitle" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__box">
+      <div class="modal__header">
+        <h2 class="modal__title" id="studentModalTitle">Add Student</h2>
+        <button class="modal__close" data-close-modal aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal__body">
+        <form id="studentForm" novalidate>
+          <input type="hidden" id="studentId"/>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="studentRollNo">Roll Number <span aria-hidden="true">*</span></label>
+              <input type="text" class="form-control" id="studentRollNo" placeholder="e.g. CS-A-001" required aria-required="true"/>
+              <span class="form-error" id="rollNoError" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="studentName">Full Name <span aria-hidden="true">*</span></label>
+              <input type="text" class="form-control" id="studentName" placeholder="e.g. Arjun Sharma" required aria-required="true"/>
+              <span class="form-error" id="nameError" role="alert"></span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="studentClass">Class <span aria-hidden="true">*</span></label>
+              <select class="form-control" id="studentClass" required aria-required="true">
+                <option value="">Select Class</option>
+                <option value="CS-A">CS-A</option>
+                <option value="CS-B">CS-B</option>
+                <option value="EC-A">EC-A</option>
+                <option value="EC-B">EC-B</option>
+                <option value="ME-A">ME-A</option>
+                <option value="ME-B">ME-B</option>
+                <option value="CE-A">CE-A</option>
+                <option value="IT-A">IT-A</option>
+              </select>
+              <span class="form-error" id="classError" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="studentSemester">Semester</label>
+              <select class="form-control" id="studentSemester">
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="studentEmail">Email</label>
+              <input type="email" class="form-control" id="studentEmail" placeholder="student@institute.edu"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="studentPhone">Phone</label>
+              <input type="tel" class="form-control" id="studentPhone" placeholder="+91 98765 43210"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="studentDOB">Date of Birth</label>
+            <input type="date" class="form-control" id="studentDOB"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="studentGender">Gender</label>
+            <select class="form-control" id="studentGender">
+              <option value="">Prefer not to say</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--outline" data-close-modal>Cancel</button>
+        <button class="btn btn--primary" id="saveStudentBtn">Save Student</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Modal -->
+  <div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__box modal__box--sm">
+      <div class="modal__header">
+        <h2 class="modal__title" id="confirmModalTitle">Confirm Action</h2>
+        <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
+      </div>
+      <div class="modal__body">
+        <p id="confirmModalText">Are you sure you want to proceed?</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--outline" data-close-modal>Cancel</button>
+        <button class="btn btn--danger" id="confirmModalAction">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden file input for CSV import -->
+  <input type="file" id="csvImportInput" accept=".csv" hidden aria-hidden="true"/>
+
+  <script src="app.js"></script>
+</body>
+</html>
